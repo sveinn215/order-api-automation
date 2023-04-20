@@ -11,7 +11,7 @@
     ],
     "properties": {
         "order_id": {
-            "type": "integer"
+            "type": "string"
         },
         "order_description": {
             "type": "string"
@@ -20,7 +20,7 @@
             "type": "string"
         },
         "last_updated_timestamp": {
-            "type": "string"
+            "type": "integer"
         },
         "special_order": {
             "type": "boolean"

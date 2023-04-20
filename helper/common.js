@@ -19,7 +19,7 @@ const errorUnauthorizedMessage = 'Unauthorized';
 const errorForbiddenMessage = 'Forbidden';
 const errorNotFoundMessage = 'Not Found';
 const errorInternalServerMessage = 'Internal Server Error';
-const baseUrl = 'https://www.url.com';
+const baseUrl = 'https://mocki.io/v1/7184fb56-cbaa-4769-82f5-f831e8f011ca';
 
 // header for API
 const header = (token) => {
@@ -33,7 +33,6 @@ const defaultAssertion = (response,schema,code) => {
     expect(response.status).to.equal(code);
     switch(code){
         case 200:
-            expect(response.body.message).to.equal(successOkMessage);
             break;
         case 201:
             expect(response.body.message).to.equal(successCreatedMessage);

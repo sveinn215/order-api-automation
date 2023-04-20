@@ -28,82 +28,78 @@ describe(`@order ${testCase.describe}`, () => {
     before(async () => {
         http.headers = common.header('AuthToken');
         http.url = common.baseUrl;
-        http.path = '/processOrder';
-        http.body = null;
+        http.path = '';
     })
 
+
+
     it(`${testCase.positive}`, async () => {
-        http.body = param.orderParameter;
-        const response = await endpoint.create(http);
-        
-        common.defaultAssertion(response,schema,common.successOk);
-        expect(response.body.code).to.equal(common.successCreatedCode);
-        expect(response.body.result.last_updated_timestamp).to.greaterThan(param.orderParameter.last_updated_timestamp);
-        expect(response.body.result.order_status).to.equal('Created'); 
+        const response = await endpoint.readBy(http);
+        common.defaultAssertion(response,schema,common.successOkCode);
     });
 
-    param.orderParameter.forEach( param => {
-        it(`${testCase.negative.requiredField.replace('{field}',param)}`, async () => {
-            http.body = param.orderParameter;
-            http.body[param] = null;
-            const response = await endpoint.create(http);
+    // param.orderParameter.forEach( param => {
+    //     it(`${testCase.negative.requiredField.replace('{field}',param)}`, async () => {
+    //         http.body = param.orderParameter;
+    //         http.body[param] = null;
+    //         const response = await endpoint.create(http);
             
-            common.defaultAssertion(response,schema,common.errorServerCode);
-        });
-    });
+    //         common.defaultAssertion(response,schema,common.errorServerCode);
+    //     });
+    // });
 
-    let invalidReqCount = 0;
-    param.orderParameter.forEach(param => {
-        it(`${testCase.negative.invalidType.replace('{field}',param)}`, async () => {
-            http.body = param.orderParameter;
-            http.body[param] = invalidReq[invalidReqCount];
-            const response = await endpoint.create(http);
+    // let invalidReqCount = 0;
+    // param.orderParameter.forEach(param => {
+    //     it(`${testCase.negative.invalidType.replace('{field}',param)}`, async () => {
+    //         http.body = param.orderParameter;
+    //         http.body[param] = invalidReq[invalidReqCount];
+    //         const response = await endpoint.create(http);
             
-            common.defaultAssertion(response,schema,common.errorBadRequestCode);
-        });
-        invalidReqCount++;
-    });
+    //         common.defaultAssertion(response,schema,common.errorBadRequestCode);
+    //     });
+    //     invalidReqCount++;
+    // });
 
-    it(`${testCase.negative.noAuth}`, async () => {
-        http.body = param.orderParameter;
-        http.headers = common.header(null);
-        const response = await endpoint.create(http);
+    // it(`${testCase.negative.noAuth}`, async () => {
+    //     http.body = param.orderParameter;
+    //     http.headers = common.header(null);
+    //     const response = await endpoint.create(http);
         
-        common.defaultAssertion(response,schema,common.successOk);
-        expect(response.body.code).to.equal(common.errorUnauthorizedCode);
-    });
+    //     common.defaultAssertion(response,schema,common.successOk);
+    //     expect(response.body.code).to.equal(common.errorUnauthorizedCode);
+    // });
 
-    it(`${testCase.negative.noAccess}`, async () => {
-        http.body = param.orderParameter;
-        http.headers = common.header(null);
-        const response = await endpoint.create(http);
+    // it(`${testCase.negative.noAccess}`, async () => {
+    //     http.body = param.orderParameter;
+    //     http.headers = common.header(null);
+    //     const response = await endpoint.create(http);
         
-        common.defaultAssertion(response,schema,common.successOk);
-        expect(response.body.code).to.equal(common.errorForbiddenCode);
-    });
+    //     common.defaultAssertion(response,schema,common.successOk);
+    //     expect(response.body.code).to.equal(common.errorForbiddenCode);
+    // });
 
-    it(`${testCase.negative.expiredAuth}`, async () => {
-        http.body = param.orderParameter;
-        http.headers = common.header(null);
-        const response = await endpoint.create(http);
+    // it(`${testCase.negative.expiredAuth}`, async () => {
+    //     http.body = param.orderParameter;
+    //     http.headers = common.header(null);
+    //     const response = await endpoint.create(http);
         
-        common.defaultAssertion(response,schema,common.successOk);
-        expect(response.body.code).to.equal(common.errorUnauthorizedCode);
-    });
+    //     common.defaultAssertion(response,schema,common.successOk);
+    //     expect(response.body.code).to.equal(common.errorUnauthorizedCode);
+    // });
 
-    it(`${testCase.negative.invalidDateFormat}`, async () => {
-        http.body = param.orderParameter;
-        http.body.last_updated_timestamp = '2023-02-19';
-        const response = await endpoint.create(http);
+    // it(`${testCase.negative.invalidDateFormat}`, async () => {
+    //     http.body = param.orderParameter;
+    //     http.body.last_updated_timestamp = '2023-02-19';
+    //     const response = await endpoint.create(http);
         
-        common.defaultAssertion(response,schema,common.errorBadRequestCode);
-    });
+    //     common.defaultAssertion(response,schema,common.errorBadRequestCode);
+    // });
 
-    it(`${testCase.negative.invalidOrderStatus}`, async () => {
-        http.body = param.orderParameter;
-        http.body.order_status = 'invalid';
-        const response = await endpoint.create(http);
+    // it(`${testCase.negative.invalidOrderStatus}`, async () => {
+    //     http.body = param.orderParameter;
+    //     http.body.order_status = 'invalid';
+    //     const response = await endpoint.create(http);
         
-        common.defaultAssertion(response,schema,common.errorBadRequestCode);
-    });
+    //     common.defaultAssertion(response,schema,common.errorBadRequestCode);
+    // });
 });

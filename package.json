@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-api": "./node_modules/mocha/bin/mocha ./test --recursive --reporter mocha-junit-reporter --reporter-options mochaFile=reports/integration/result.xml --timeout 30000"
+    "test-api": "./node_modules/mocha/bin/mocha.js ./tests --recursive --timeout 30000"
   },
   "author": "Muhammad Imam Isfahani",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.7",
+    "chai-json-schema": "^1.5.1",
     "mocha": "^10.2.0",
     "mochawesome": "^7.1.3",
     "supertest": "^6.3.3"
